@@ -15,7 +15,7 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       let exercisesData = [];
 
       if (bodyPart === 'all') {
-        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+        exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises?limit=10&offset=0', exerciseOptions);
       } else {
         exercisesData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`, exerciseOptions);
       }
@@ -44,9 +44,13 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="46px">Showing Results</Typography>
       <Stack direction="row" sx={{ gap: { lg: '107px', xs: '50px' } }} flexWrap="wrap" justifyContent="center">
         {/* {currentExercises.map((exercise, index) => ( */}
-        {exercises.map((exercise, index) => (
-          <ExerciseCard key={index} exercise={exercise} />
-        ))}
+        {currentPage == 2 && exercises.length > 6 ? (<>{exercises.slice(6,10).map((exercise, index) => (
+            <ExerciseCard key={index} exercise={exercise} />
+          ))}</>) :(<>{exercises.slice(0,6).map((exercise, index) => (
+            <ExerciseCard key={index} exercise={exercise} />
+          ))}</>)
+        }
+        
       </Stack>
       <Stack sx={{ mt: { lg: '114px', xs: '70px' } }} alignItems="center">
         {exercises.length > 9 && (

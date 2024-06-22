@@ -11,16 +11,23 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   useEffect(() => {
     const fetchExercisesData = async () => {
       const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', exerciseOptions);
-
       setBodyParts(['all', ...bodyPartsData]);
     };
 
     fetchExercisesData();
   }, []);
 
+  const keyDown = (event) => {
+    if(event.key === 'Enter')
+    {
+      handleSearch();
+    }
+  }
+
   const handleSearch = async () => {
     if (search) {
-      const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises', exerciseOptions);
+      const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises?limit=10&offset=0', exerciseOptions);
+      console.log(exercisesData);
 
       const searchedExercises = exercisesData.filter(
         (item) => item.name.toLowerCase().includes(search)
@@ -31,6 +38,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
       window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
 
+      console.log(searchedExercises);
       setSearch('');
       setExercises(searchedExercises);
     }
@@ -49,6 +57,7 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
           onChange={(e) => setSearch(e.target.value.toLowerCase())}
           placeholder="Search Exercises"
           type="text"
+          onKeyDown={keyDown}
         />
         <Button className="search-btn" sx={{ bgcolor: '#FF2625', color: '#fff', textTransform: 'none', width: { lg: '173px', xs: '80px' }, height: '56px', position: 'absolute', right: '0px', fontSize: { lg: '20px', xs: '14px' } }} onClick={handleSearch}>
           Search
