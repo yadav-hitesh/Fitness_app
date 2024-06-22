@@ -44,13 +44,17 @@ const Exercises = ({ exercises, setExercises, bodyPart }) => {
       <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { lg: '44px', xs: '30px' } }} mb="46px">Showing Results</Typography>
       <Stack direction="row" sx={{ gap: { lg: '107px', xs: '50px' } }} flexWrap="wrap" justifyContent="center">
         {/* {currentExercises.map((exercise, index) => ( */}
-        {currentPage == 2 && exercises.length > 6 ? (<>{exercises.slice(6,10).map((exercise, index) => (
-            <ExerciseCard key={index} exercise={exercise} />
-          ))}</>) :(<>{exercises.slice(0,6).map((exercise, index) => (
-            <ExerciseCard key={index} exercise={exercise} />
-          ))}</>)
-        }
-        
+        {currentPage === 2 && exercises.length > 6 ? (
+          <div>
+            {exercises.slice(6, 10).map((exercise, index) => (
+              <ExerciseCard key={index} exercise={exercise} />
+            ))}
+          </div>)
+          : (
+            <>{exercises.slice(0, 6).map((exercise, index) => (
+              <ExerciseCard key={index} exercise={exercise} />
+            ))}
+            </>)}
       </Stack>
       <Stack sx={{ mt: { lg: '114px', xs: '70px' } }} alignItems="center">
         {exercises.length > 9 && (

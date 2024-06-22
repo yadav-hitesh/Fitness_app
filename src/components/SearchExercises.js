@@ -17,17 +17,9 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
     fetchExercisesData();
   }, []);
 
-  const keyDown = (event) => {
-    if(event.key === 'Enter')
-    {
-      handleSearch();
-    }
-  }
-
   const handleSearch = async () => {
     if (search) {
       const exercisesData = await fetchData('https://exercisedb.p.rapidapi.com/exercises?limit=10&offset=0', exerciseOptions);
-      console.log(exercisesData);
 
       const searchedExercises = exercisesData.filter(
         (item) => item.name.toLowerCase().includes(search)
@@ -38,9 +30,14 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
 
       window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
 
-      console.log(searchedExercises);
       setSearch('');
       setExercises(searchedExercises);
+    }
+  };
+
+  const keyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
